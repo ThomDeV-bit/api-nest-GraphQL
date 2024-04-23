@@ -15,6 +15,12 @@ export class UserResolver {
 		return await this.userService.findAll()
 	}
 
+	@Query(() => User)
+	async findaBy(@Args('id') id: string): Promise<User> {
+		return await this.userService.findByiD(id)
+	}
+
+
 	@Mutation(() => User)
 	async createUser(@Args('data') data: UserDTO): Promise<User> {
 		return await this.userService.creatUser(data)

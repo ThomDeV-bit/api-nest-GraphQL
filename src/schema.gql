@@ -10,6 +10,7 @@ type User {
 
 type Query {
   findaAll: [User!]!
+  findaBy(id: String!): User!
 }
 
 type Mutation {

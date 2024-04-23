@@ -14,7 +14,15 @@ export class UserService {
 	async findAll(): Promise<User[]> {
 		return await this.userRepository.find()
 	}
-	
+
+	async findByiD(data: string): Promise<User> {
+		return await this.userRepository.findOne({
+			where: {
+				id: data
+			}
+		})
+	}
+
 	async creatUser(data: UserDTO) {
 		const user = this.userRepository.create(data)
 		const userSaved = await this.userRepository.save(user)
