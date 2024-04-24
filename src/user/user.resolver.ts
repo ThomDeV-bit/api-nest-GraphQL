@@ -2,7 +2,6 @@ import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { UserDTO } from 'src/dto/user.dto';
 import { User } from 'src/entites/user.entity';
-import { useContainer } from 'class-validator';
 
 @Resolver('User')
 export class UserResolver {
@@ -24,5 +23,16 @@ export class UserResolver {
 	@Mutation(() => User)
 	async createUser(@Args('data') data: UserDTO): Promise<User> {
 		return await this.userService.creatUser(data)
+	}
+
+
+	@Mutation(() => User)
+	async updateUser(@Args('id') id: string, @Args('data') data: UserDTO): Promise<User> {
+		return await this.userService.updateUser(id, data)
+	}
+
+	@Mutation(() => Boolean)
+	async deleteUser(@Args('id') id: string): Promise<Boolean> {
+		return await this.userService.deletUser(id)
 	}
 }

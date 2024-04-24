@@ -1,3 +1,4 @@
+import { ApolloGatewayDriver } from '@nestjs/apollo';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserDTO } from 'src/dto/user.dto';
@@ -29,5 +30,18 @@ export class UserService {
 
 		if (!userSaved) throw new InternalServerErrorException('Erro ao criar usuario')
 		return userSaved
+	}
+
+	async updateUser(id: string, data: UserDTO) {
+		const user = await this.findByiD(id)
+		await this.userRepository.update(user, { ...data })
+		const userUpdated = this.userRepository.create({ ...user, ...data })
+		return userUpdated
+	}
+
+	async deletUser(id: string) {
+		const deleted = await this.userRepository.delete({ id })
+		if (!deleted) return false
+		return true
 	}
 }
