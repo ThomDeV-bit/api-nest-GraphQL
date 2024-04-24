@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  myapp:
+    build: .
+    container_name: api-graphql
+    ports:
+      - 3002:3000
+    expose:
+      - 3002
+    networks:
+      - mynet
+
+  db:
+    image: mysql:latest
+    container_name: graph-db
+    environment:
+      MYSQL_DATABASE: 'nest_api'
+      MYSQL_ROOT_PASSWORD: root123
+    ports:
+      - 3008:3306
+    expose:
+      - 3008
+    volumes:
+      - C:\Users\thomaz.josetti\Desktop\mysql:/var/lib/mysql
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    external: true
+    name: mynet
+    driver: bridge
